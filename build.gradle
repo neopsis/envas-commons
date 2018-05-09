@@ -15,7 +15,7 @@ ext {
 }
 println 'Running Environment NIAGARA_HOME: ' + ext.niagara_home
 
-apply from: "${rootProject.ext.niagara_home}/etc/gradle/eclipse.gradle"
+// apply from: "${rootProject.ext.niagara_home}/etc/gradle/eclipse.gradle"
 apply from: "${rootProject.ext.niagara_home}/etc/gradle/idea.gradle"
 
 gradle.beforeProject { p ->

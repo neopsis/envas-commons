@@ -46,7 +46,7 @@ dependencies {
     compile "Tridium:baja:4.0"
 
     uberjar 'net.engio:mbassador:1.3.1'
-    uberjar 'com.alibaba:fastjson:1.2.42'
+    uberjar 'com.alibaba:fastjson:1.2.46'
 
     testCompile('junit:junit:4.12'){
         exclude group: 'org.hamcrest'
