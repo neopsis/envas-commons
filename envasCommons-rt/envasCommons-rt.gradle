@@ -1,0 +1,108 @@
+/*
+ * Copyright (c) 2016 Neopsis GmbH. All Rights Reserved.
+ */
+
+plugins {
+    id "org.zeroturnaround.gradle.jrebel" version "1.1.8"
+}
+
+description = "Envas Commons for Niagara4"
+
+repositories {
+    mavenCentral()
+}
+
+niagaraModule {
+    preferredSymbol = "env"
+    moduleName      = "envasCommons"
+    runtimeProfile  = "rt"
+}
+
+// *******************************************************
+//        Add provided config for widgetsets
+// *******************************************************
+configurations {
+    compile {
+        description 'Code added to the artifact'
+    }
+    provided {
+        description 'Compile time libraries'
+    }
+}
+
+// *******************************************************
+//               Niagara needs Compact3
+// *******************************************************
+compileJava {
+    options.compilerArgs = ["-profile", "compact3"]
+}
+
+// *******************************************************
+//               Build dependencies
+// *******************************************************
+dependencies {
+
+    compile "Tridium:nre:4.0"
+    compile "Tridium:baja:4.0"
+
+    uberjar 'net.engio:mbassador:1.3.1'
+    uberjar 'com.alibaba:fastjson:1.2.42'
+
+    testCompile('junit:junit:4.12'){
+        exclude group: 'org.hamcrest'
+    }
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+}
+
+// *******************************************************
+//      Add provided configuration to the Idea
+// *******************************************************
+idea {
+    module {
+        scopes.PROVIDED.plus += [configurations.provided]
+    }
+}
+
+// *******************************************************
+//      Add provided configuration to the Gradle
+// *******************************************************
+sourceSets {
+    main {
+        compileClasspath += configurations.provided
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}
+
+
+// *******************************************************
+//          Make jar
+// *******************************************************
+jar {
+
+    dependsOn(generateRebel)
+    includeEmptyDirs = true
+
+    doLast {
+        copy {
+            from (project.buildDir.toString() + '/libs')
+            include (baseName + '-' + version + '.jar')
+            rename  (baseName + '-' + version + '.jar', baseName + '.jar')
+            into {
+                file (testNiagaraHome + '/modules')
+            }
+        }
+    }
+}
+
+/**
+ *   Avoid error messages due to missing Javadoc items
+ */
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}

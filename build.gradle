@@ -1,0 +1,65 @@
+def getGradleProperty(String propName) {
+  if (gradle.hasProperty(propName)) {
+    gradle.getProperty(propName)
+  } else {
+    System.getProperty(propName) ?: System.getenv(propName)
+  }
+}
+
+apply from: "environment.gradle"
+
+ext {
+  niagara_home      = getGradleProperty('niagara_home')
+  niagara_dev_home  = getGradleProperty('niagara_dev_home')
+  niagara_user_home = getGradleProperty('niagara_user_home')
+}
+println 'Running Environment NIAGARA_HOME: ' + ext.niagara_home
+
+apply from: "${rootProject.ext.niagara_home}/etc/gradle/eclipse.gradle"
+apply from: "${rootProject.ext.niagara_home}/etc/gradle/idea.gradle"
+
+gradle.beforeProject { p ->
+  configure(p) {
+    def vendorSettings = file("${rootDir}/vendor.gradle")
+    if (vendorSettings.exists()) {
+      apply from: vendorSettings
+    }
+    apply from: "${rootProject.ext.niagara_home}/etc/gradle/niagara.gradle"
+  }
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+  allprojects {
+    tasks.withType(Javadoc) {
+      options.addStringOption('Xdoclint:none', '-quiet')
+    }
+  }
+}
+
+
+tasks.addRule("""
+Pattern: [jar[Test]|clean|<any gradle task>]/[path]: Run a Gradle task against a set of modules rooted at path.
+""") { String taskName ->
+  def matcher = taskName =~ /(.*?)(Test)?\/(.*)/
+  if (matcher) {
+    def command = matcher.group(1)
+    def includeTestModules = matcher.group(2) == 'Test'
+    def path = file("${projectDir}/${matcher.group(3)}").toPath()
+
+    assert path.toFile().exists()
+    def targetProjects = subprojects.findAll { it.projectDir.toPath().startsWith(path) }
+
+    // default is build command and build is an alias for Gradle's jar task
+    if (command.isEmpty() || command == 'build') { command = 'jar' }
+
+    // Create task for subproject
+    task(taskName, dependsOn: targetProjects.tasks[command])
+    if (includeTestModules && command == 'jar') {
+      tasks[taskName].dependsOn targetProjects.moduleTestJar
+    }
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '3.0'
+}

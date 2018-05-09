@@ -1,0 +1,8 @@
+<permissions>
+    <niagara-permission-groups type="all">
+        <req-permission>
+            <name>LOGGING</name>
+            <purposeKey>Everybody needs to write to application log.</purposeKey>
+        </req-permission>
+    </niagara-permission-groups>
+</permissions>

@@ -1,0 +1,44 @@
+import groovy.io.FileVisitResult
+import groovy.io.FileType
+
+def discoveredProjects = [:] as Map<String, File>
+
+ext {
+  niagaraRoots = ['envasCommons-rt','envasCommons-ux','envasCommons-wb']
+  excludeDirs = ['.hg', 'build', 'out', 'src', 'srcTest', 'bin']
+}
+
+//
+// Include all subprojects. Subproject is a directory
+// that contains file <directoryName>.gradle
+//
+niagaraRoots.collect({ file(it) }).findAll({ it.exists() }).each { File projectRoot ->
+  projectRoot.traverse(
+    type: FileType.DIRECTORIES,
+    preRoot: true,
+    preDir: { File projectDir ->
+      def projectName = projectDir.name
+      if (excludeDirs.contains(projectName)) {
+        return FileVisitResult.SKIP_SUBTREE
+      }
+
+      File buildScript = new File(projectDir, "${projectName}.gradle")
+      if (buildScript.exists()) {
+        discoveredProjects[projectName] = projectDir
+        include projectName
+        return FileVisitResult.SKIP_SUBTREE
+      }
+    }
+  )
+}
+
+//
+// Set root project name and build files for all subprojects
+//
+rootProject.name = 'envasCommons'
+rootProject.children.each { project ->
+  project.projectDir = discoveredProjects[project.name]
+  project.buildFileName = "${project.name}.gradle"
+  assert project.projectDir.isDirectory()
+  assert project.buildFile.isFile()
+}
