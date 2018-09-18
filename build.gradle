@@ -1,22 +1,6 @@
-def getGradleProperty(String propName) {
-  if (gradle.hasProperty(propName)) {
-    gradle.getProperty(propName)
-  } else {
-    System.getProperty(propName) ?: System.getenv(propName)
-  }
-}
 
-apply from: "environment.gradle"
-
-ext {
-  niagara_home      = getGradleProperty('niagara_home')
-  niagara_dev_home  = getGradleProperty('niagara_dev_home')
-  niagara_user_home = getGradleProperty('niagara_user_home')
-}
-println 'Running Environment NIAGARA_HOME: ' + ext.niagara_home
-
-// apply from: "${rootProject.ext.niagara_home}/etc/gradle/eclipse.gradle"
-apply from: "${rootProject.ext.niagara_home}/etc/gradle/idea.gradle"
+apply from: file('environment.gradle')
+apply from: "${niagara_home}/etc/gradle/idea.gradle"
 
 gradle.beforeProject { p ->
   configure(p) {
@@ -24,18 +8,18 @@ gradle.beforeProject { p ->
     if (vendorSettings.exists()) {
       apply from: vendorSettings
     }
-    apply from: "${rootProject.ext.niagara_home}/etc/gradle/niagara.gradle"
+    apply from: "${niagara_home}/etc/gradle/niagara.gradle"
   }
+  project.ext['niagara.signing.enabled'] = true
 }
 
-if (JavaVersion.current().isJava8Compatible()) {
-  allprojects {
-    tasks.withType(Javadoc) {
-      options.addStringOption('Xdoclint:none', '-quiet')
+subprojects { Project p ->
+  p.pluginManager.withPlugin('com.tridium.niagara-module') {
+    p.niagaraModule {
+      certAlias = "Niagara4Modules"
     }
   }
 }
-
 
 tasks.addRule("""
 Pattern: [jar[Test]|clean|<any gradle task>]/[path]: Run a Gradle task against a set of modules rooted at path.
@@ -61,5 +45,5 @@ Pattern: [jar[Test]|clean|<any gradle task>]/[path]: Run a Gradle task against a
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '3.0'
+  gradleVersion = '4.4.1'
 }

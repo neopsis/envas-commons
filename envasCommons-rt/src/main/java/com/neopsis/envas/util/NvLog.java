@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Logging support class contains static logging methods
+ * Module logging
  *
  */
 public class NvLog {

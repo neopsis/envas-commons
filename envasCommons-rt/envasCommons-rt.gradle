@@ -6,7 +6,7 @@ plugins {
     id "org.zeroturnaround.gradle.jrebel" version "1.1.8"
 }
 
-description = "Envas Commons for Niagara4"
+description = "Envas - Commons for Niagara4"
 
 repositories {
     mavenCentral()
@@ -16,18 +16,6 @@ niagaraModule {
     preferredSymbol = "env"
     moduleName      = "envasCommons"
     runtimeProfile  = "rt"
-}
-
-// *******************************************************
-//        Add provided config for widgetsets
-// *******************************************************
-configurations {
-    compile {
-        description 'Code added to the artifact'
-    }
-    provided {
-        description 'Compile time libraries'
-    }
 }
 
 // *******************************************************
@@ -54,43 +42,40 @@ dependencies {
     testCompile 'org.hamcrest:hamcrest-library:1.3'
 }
 
-// *******************************************************
-//      Add provided configuration to the Idea
-// *******************************************************
-idea {
-    module {
-        scopes.PROVIDED.plus += [configurations.provided]
-    }
-}
 
 // *******************************************************
-//      Add provided configuration to the Gradle
+//      Source set layout
 // *******************************************************
 sourceSets {
     main {
-        compileClasspath += configurations.provided
         java {
             srcDirs = ['src/main/java']
         }
     }
 }
 
-
 // *******************************************************
 //          Make jar
 // *******************************************************
+
 jar {
 
     dependsOn(generateRebel)
     includeEmptyDirs = true
 
+    exclude 'maven/'
+    exclude 'services/'
+    exclude 'NOTICE.txt'
+    exclude 'META-INF/services/**'
+    exclude 'META-INF/maven/**'
+    exclude 'META-INF/NOTICE.txt'
+
     doLast {
         copy {
-            from (project.buildDir.toString() + '/libs')
-            include (baseName + '-' + version + '.jar')
-            rename  (baseName + '-' + version + '.jar', baseName + '.jar')
+            from (niagara_home + '/modules')
+            include (baseName + '.jar')
             into {
-                file (testNiagaraHome + '/modules')
+                file (niagara_test_home + '/modules')
             }
         }
     }

@@ -11,6 +11,7 @@
 package com.neopsis.envas.commons.license;
 
 import com.neopsis.envas.util.NvLog;
+
 import com.tridium.sys.license.LicenseUtil;
 
 import javax.baja.license.Feature;
@@ -18,14 +19,16 @@ import javax.baja.license.FeatureNotLicensedException;
 import javax.baja.license.LicenseDatabaseException;
 import javax.baja.license.LicenseManager;
 import javax.baja.nre.util.SortUtil;
+
 import java.security.GeneralSecurityException;
+
 import java.util.HashMap;
 
 /**
  * License Manager saves all licensed features from all vendors.
  * Licensed features are accessible via simple API
- *    <li> {@link NvLicenseManager#getFeature(vendor, feature)}
- *    <li> {@link NvLicenseManager#checkFeature(vendor, feature)}
+ *    <li> {@link NvLicenseManager#getFeature}
+ *    <li> {@link NvLicenseManager#checkFeature}
  *    <li> {@link NvLicenseManager#getFeatures()}
  *    <p>
  * All features from validated licenses (license HostId,
@@ -72,7 +75,7 @@ public abstract class NvLicenseManager implements LicenseManager {
     /**
      * Add all valid features into the feature map.
      *
-     * @param array with all licenses loaded from license store
+     * @param licenses array with all licenses loaded from license store
      */
     protected final void setFeatures(final NvLicense[] licenses) {
 

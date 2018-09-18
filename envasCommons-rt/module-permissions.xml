@@ -1,8 +1,15 @@
 <permissions>
     <niagara-permission-groups type="all">
+
         <req-permission>
             <name>LOGGING</name>
             <purposeKey>Everybody needs to write to application log.</purposeKey>
         </req-permission>
+
+        <req-permission>
+            <name>REFLECTION</name>
+            <purposeKey>Message bus needs reflection.</purposeKey>
+        </req-permission>
+
     </niagara-permission-groups>
 </permissions>

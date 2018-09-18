@@ -1,25 +1,16 @@
-/* Environment Configuration File */
+/*
+ * Copyright (c) 2016 Neopsis GmbH, All Rights Reserved
+ */
 
-// Niagara 4.0
-//gradle.ext.niagara_home = "C:/Niagara/Niagara-4.0.22.16"
-//gradle.ext.niagara_user_home = "C:/Users/robert/Niagara4.0/tridium"
-
-// Niagara 4.1
-//gradle.ext.niagara_home = "C:/Niagara/Niagara-4.1.27.20"
-//gradle.ext.niagara_user_home = "C:/Users/robert/Niagara4.1/tridium"
-
-// Niagara 4.2
-//gradle.ext.niagara_home = "C:/Niagara/Niagara-4.2.36.38"
-//gradle.ext.niagara_user_home = "C:/Users/robert/Niagara4.2/tridium"
-
-// Niagara 4.3
-// gradle.ext.niagara_home = "C:/Niagara/Niagara-4.3.58.18"
-// gradle.ext.niagara_user_home = "C:/Users/robert/Niagara4.3"
-
-// Niagara 4.4
-gradle.ext.niagara_home = "C:/Niagara/Niagara-4.4.73.24"
-gradle.ext.niagara_user_home = "C:/Users/robert/Niagara4.4/tridium"
-
-
-// testing Niagara instance
-ext.testNiagaraHome = 'C:/Niagara/Niagara-4.6.91.0'
+ext {
+    // niagara_version      = "4.4"
+    // niagara_release      = "4.4.73.24"
+    niagara_version      = "4.6"
+    niagara_release      = "4.6.96.28"
+    niagara_test_version = "4.7"
+    niagara_test_release = "4.7.108.2"
+    niagara_home         = "C:/Niagara/Niagara-${niagara_release}"
+    niagara_user_home    = "C:/Users/robert/Niagara${niagara_version}/tridium"
+    niagara_dev_home     = "C:/Users/robert/Niagara${niagara_version}/tridium"
+    niagara_test_home    = "C:/Niagara/Niagara-${niagara_test_release}"
+}

@@ -11,6 +11,7 @@
 package com.neopsis.envas.commons.license;
 
 import com.alibaba.fastjson.annotation.JSONField;
+
 import com.neopsis.envas.commons.license.util.LicenseUtils;
 
 import java.security.GeneralSecurityException;

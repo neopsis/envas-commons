@@ -50,7 +50,7 @@ public final class ByteHex {
      * @param hex Hexadecimal digits representation
      * @return byte Byte array
      */
-    public static byte[] convert(String hex) throws IllegalArgumentException{
+    public static byte[] convert(String hex) throws IllegalArgumentException {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

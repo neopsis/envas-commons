@@ -11,12 +11,16 @@
 package com.neopsis.envas.commons.license;
 
 import com.alibaba.fastjson.annotation.JSONField;
+
 import com.neopsis.envas.commons.license.util.JulianDateCodec;
 import com.neopsis.envas.commons.license.util.LicenseUtils;
+
 import com.tridium.sys.Nre;
 
 import javax.baja.license.Feature;
+
 import java.security.GeneralSecurityException;
+
 import java.util.Date;
 import java.util.HashMap;
 
