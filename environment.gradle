@@ -3,10 +3,10 @@
  */
 
 ext {
-    // niagara_version      = "4.4"
-    // niagara_release      = "4.4.73.24"
-    niagara_version      = "4.6"
-    niagara_release      = "4.6.96.28"
+    niagara_version      = "4.4"
+    niagara_release      = "4.4.73.24"
+    // niagara_version      = "4.6"
+    // niagara_release      = "4.6.96.28"
     niagara_test_version = "4.7"
     niagara_test_release = "4.7.108.2"
     niagara_home         = "C:/Niagara/Niagara-${niagara_release}"

@@ -95,10 +95,12 @@ public class Tests {
     @Test
     public void licensorTest() {
 
+        System.out.println("Licensor test");
+
         NvLicense lic = new NvLicense();
 
         lic.setVendor(VENDOR);
-        lic.setExpiration(EXPIRED.getTime());
+        lic.setExpiration(Long.MAX_VALUE);
         lic.setGenerated(GENERATED.getTime());
         lic.setHostId(HOST_ID);
         lic.setVersion(VERSION);
@@ -117,7 +119,7 @@ public class Tests {
 
         feature2.setVendorName(VENDOR);
         feature2.setFeatureName(FEATURE2);
-        feature2.setExpiration(EXPIRED.getTime());
+        feature2.setExpiration(Long.MAX_VALUE);
         feature2.addOption(OPTION_KEY21, OPTION_VALUE21);
         feature2.addOption(OPTION_KEY22, OPTION_VALUE22);
         lic.addFeature(feature2);
@@ -146,6 +148,8 @@ public class Tests {
 
     @Test
     public void licenseeTest() {
+
+        System.out.println("Licensee test");
 
         NvLicense lic     = null;
         boolean   isValid = false;

@@ -24,7 +24,6 @@ import javax.baja.sys.Clock;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Tridium license feature interface implementation.
@@ -32,7 +31,7 @@ import java.util.Map;
  */
 public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
 
-    @JSONField(serialize = false, deserialize = false)
+    @JSONField(name = "vendor")
     String                  vendorName  = null;
     @JSONField(name = "feature")
     String                  featureName = null;
@@ -204,23 +203,30 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
 
         ArrayList<String> lst = new ArrayList<>();
 
-        for (Map.Entry<String, Object> entry : options.entrySet()) {
-            lst.add(entry.getKey());
+        for (String key : options.keySet()) {
+            lst.add(key);
         }
 
         lst.trimToSize();
 
-        return (String[]) lst.toArray();
+        return lst.toArray(new String[lst.size()]);
     }
 
     /**
-     * Returns an option
+     * Returns a string option
      *
      * @param option  option key
      */
     @Override
     public String get(String option) {
-        return (String) options.get(option);
+
+        Object oval = options.get(option);
+
+        if (oval instanceof String) {
+            return (String) oval;
+        }
+
+        return oval.toString();
     }
 
     /**

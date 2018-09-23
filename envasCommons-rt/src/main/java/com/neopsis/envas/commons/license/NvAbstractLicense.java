@@ -61,7 +61,7 @@ public abstract class NvAbstractLicense {
      * Parsing callback called after the license object was created and before
      * the object will be filled with parsed data. Default - do nothing
      */
-    public void preDeserialize() {
+    public void beforeDeserialize() {
 
         //
     }

@@ -10,7 +10,7 @@ gradle.beforeProject { p ->
     }
     apply from: "${niagara_home}/etc/gradle/niagara.gradle"
   }
-  project.ext['niagara.signing.enabled'] = true
+  // project.ext['niagara.signing.enabled'] = true
 }
 
 subprojects { Project p ->

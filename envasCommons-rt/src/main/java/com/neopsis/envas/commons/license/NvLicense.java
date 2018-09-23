@@ -21,8 +21,9 @@ import javax.baja.license.Feature;
 
 import java.security.GeneralSecurityException;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Tridium license reference implementation
@@ -31,25 +32,25 @@ import java.util.HashMap;
 public class NvLicense extends NvAbstractLicense {
 
     @JSONField(name = "vendor")
-    private String                            vendor;
+    private String                 vendor;
     @JSONField(name = "hostId")
-    private String                            hostId;
+    private String                 hostId;
     @JSONField(
         name             = "expiration",
         serializeUsing   = JulianDateCodec.class,
         deserializeUsing = JulianDateCodec.class
     )
-    private long                              expiration;
+    public long                   expiration;
     @JSONField(
         name             = "generated",
         serializeUsing   = JulianDateCodec.class,
         deserializeUsing = JulianDateCodec.class
     )
-    private long                              generated;
+    private long                   generated;
     @JSONField(name = "version")
-    private String                            version;
+    private String                 version;
     @JSONField(name = "features")
-    private HashMap<String, NvLicenseFeature> features;
+    private List<NvLicenseFeature> features;
 
     /**
      * Default constructor - reflection needs it
@@ -62,7 +63,7 @@ public class NvLicense extends NvAbstractLicense {
     /**
      * Constructor creates new license object without features
      *
-     * @param vendor  vendorName
+     * @param vendor  vendor
      * @param hostId  host ID
      * @param expDate expiration date
      * @param genDate generated date
@@ -81,7 +82,7 @@ public class NvLicense extends NvAbstractLicense {
     /**
      * Constructor creates new license object including features
      *
-     * @param vendor  vendorName
+     * @param vendor  vendor
      * @param hostId  host ID
      * @param expDate expiration date
      * @param genDate generated date
@@ -90,8 +91,7 @@ public class NvLicense extends NvAbstractLicense {
      * @param ftr features
      *
      */
-    public NvLicense(String vendor, String hostId, long expDate, long genDate, String version,
-                     HashMap<String, NvLicenseFeature> ftr) {
+    public NvLicense(String vendor, String hostId, long expDate, long genDate, String version, List<NvLicenseFeature> ftr) {
 
         this.vendor  = vendor;
         this.hostId  = hostId;
@@ -167,17 +167,12 @@ public class NvLicense extends NvAbstractLicense {
         this.version = version;
     }
 
-    public HashMap<String, NvLicenseFeature> getFeatures() {
+    public List<NvLicenseFeature> getFeatures() {
         return features;
     }
 
-    public void setFeatures(HashMap<String, NvLicenseFeature> features) {
-
+    public void setFeatures(List<NvLicenseFeature> features) {
         this.features = features;
-        this.features.forEach(
-            (key, value) -> {
-                value.setVendorName(this.getVendor());
-            });
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -202,21 +197,28 @@ public class NvLicense extends NvAbstractLicense {
         }
 
         if (features == null) {
-            features = new HashMap<>();
+            features = new ArrayList<>();
         }
 
         feature.setVendorName(getVendor());
-        features.put(feature.getFeatureName().toLowerCase(), feature);
+        features.add(feature);
     }
 
     @JSONField(serialize = false, deserialize = false)
-    public Feature getFeature(String feature) {
+    public Feature getFeature(String featureName) {
 
-        if ((feature == null) || (features == null)) {
+        if (features == null) {
             return null;
         }
 
-        return features.get(feature.toLowerCase());
+        for (NvLicenseFeature feature : features) {
+
+            if (feature.getFeatureName().equals(featureName)) {
+                return feature;
+            }
+        }
+
+        return null;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -304,8 +306,8 @@ public class NvLicense extends NvAbstractLicense {
     public void afterDeserialize() {
 
         this.features.forEach(
-            (key, value) -> {
-                value.setVendorName(this.getVendor());
+            (k) -> {
+                k.setVendorName(this.getVendor());
             });
     }
 

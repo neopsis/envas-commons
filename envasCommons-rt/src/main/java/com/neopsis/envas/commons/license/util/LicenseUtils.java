@@ -10,37 +10,23 @@
 
 package com.neopsis.envas.commons.license.util;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import java.security.GeneralSecurityException;
-import java.security.InvalidKeyException;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.SecureRandom;
-import java.security.Signature;
-import java.security.SignatureException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-
-import javax.crypto.KeyGenerator;
-
-import com.alibaba.fastjson.parser.DefaultJSONParser;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-
 import com.neopsis.envas.commons.license.NvAbstractLicense;
+
+import javax.crypto.KeyGenerator;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
 /**
  * Utilities supporting licensing framework
@@ -409,17 +395,40 @@ public class LicenseUtils {
      */
     public static <T extends NvAbstractLicense> T toObject(String json, Class<T> clazz)
             throws IllegalAccessException, InstantiationException {
+        return toObject(json, clazz, ParserConfig.getGlobalInstance());
+    }
 
+    /**
+     * Converts a JSON string to the Java object. The JSON
+     * must be a serialization of {@link NvAbstractLicense} subclass
+     *
+     * @param json a license as JSON object
+     * @return  license as Java object
+     */
+    public static <T extends NvAbstractLicense> T toObject(String json, Class<T> clazz, ParserConfig config)
+            throws IllegalAccessException, InstantiationException {
+
+        T lic = JSON.parseObject(json, clazz);
+
+        /**
+         *  Currently a bug in FastJSON - DefaultJSONParser.parseObject() does not
+         *  accept field annotation @JSONField nd does not install custom
+         *  deserializer.
+         *
+         *  ! -> lic.beforeDeserialize is not called !
+         *
         T lic = clazz.newInstance();
 
         // lic.configureDeserializer(ParserConfig.getGlobalInstance());
-        lic.preDeserialize();
+        lic.beforeDeserialize();
 
-        DefaultJSONParser parser = new DefaultJSONParser(json);
-
+        DefaultJSONParser parser = new DefaultJSONParser(json, config, DEFAULT_PARSER_FEATURE);
         parser.parseObject(lic);
-        lic.afterDeserialize();
         parser.close();
+
+        */
+
+        lic.afterDeserialize();
 
         return lic;
     }

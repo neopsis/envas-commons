@@ -23,6 +23,7 @@ import javax.baja.nre.util.SortUtil;
 import java.security.GeneralSecurityException;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * License Manager saves all licensed features from all vendors.
@@ -73,7 +74,7 @@ public abstract class NvLicenseManager implements LicenseManager {
     }
 
     /**
-     * Add all valid features into the feature map.
+     * Add all valid features into the feature list.
      *
      * @param licenses array with all licenses loaded from license store
      */
@@ -87,10 +88,10 @@ public abstract class NvLicenseManager implements LicenseManager {
 
                 lic.check(publicKey);
 
-                HashMap<String, NvLicenseFeature> map = lic.getFeatures();
+                List<NvLicenseFeature> licFeatures = lic.getFeatures();
 
-                for (NvLicenseFeature entry : map.values()) {
-                    features.put(LicenseUtil.toKey(entry.getVendorName(), entry.getFeatureName()), entry);
+                for (NvLicenseFeature ftr : licFeatures) {
+                    features.put(LicenseUtil.toKey(ftr.getVendorName(), ftr.getFeatureName()), ftr);
                 }
 
             } catch (GeneralSecurityException e) {
