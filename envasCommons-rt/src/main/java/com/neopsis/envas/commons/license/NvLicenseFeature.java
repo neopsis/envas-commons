@@ -48,8 +48,19 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
      * Default constructor for reflection tools
      */
     public NvLicenseFeature() {
+        options = new HashMap<>();
+    }
 
-        // do nothing
+    /**
+     * Constructor without expiration and options
+     *
+     * @param vendorName   vendorName name
+     * @param featureName  feature name
+     */
+    public NvLicenseFeature(final String vendorName, final String featureName) {
+
+        this.vendorName  = vendorName;
+        this.featureName = featureName;
     }
 
     /**
@@ -128,16 +139,34 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
     /**
      * Add a featureName option
      *
-     * @param key      option key
-     * @param option   option value
+     * @param key     option key
+     * @param value   option value
      */
-    public void addOption(String key, Object option) {
+    public void addOption(String key, Object value) {
+        addOption(key, value, null);
+    }
+
+    /**
+     * Add a featureName option
+     *
+     * @param key      option key
+     * @param value   option value
+     */
+    public void addOption(String key, Object value, Object defaultValue) {
+
+        if ((value == null) && (defaultValue == null)) {
+            return;
+        }
 
         if (options == null) {
             options = new HashMap<>();
         }
 
-        options.put(key, option);
+        if (value == null) {
+            options.put(key, defaultValue);
+        } else {
+            options.put(key, value);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////

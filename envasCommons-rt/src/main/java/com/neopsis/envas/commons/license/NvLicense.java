@@ -11,16 +11,11 @@
 package com.neopsis.envas.commons.license;
 
 import com.alibaba.fastjson.annotation.JSONField;
-
 import com.neopsis.envas.commons.license.util.JulianDateCodec;
-import com.neopsis.envas.commons.license.util.LicenseUtils;
-
 import com.tridium.sys.Nre;
 
 import javax.baja.license.Feature;
-
 import java.security.GeneralSecurityException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +35,7 @@ public class NvLicense extends NvAbstractLicense {
         serializeUsing   = JulianDateCodec.class,
         deserializeUsing = JulianDateCodec.class
     )
-    public long                   expiration;
+    public long                    expiration;
     @JSONField(
         name             = "generated",
         serializeUsing   = JulianDateCodec.class,
@@ -56,8 +51,7 @@ public class NvLicense extends NvAbstractLicense {
      * Default constructor - reflection needs it
      */
     public NvLicense() {
-
-        //
+        generated = new Date().getTime();
     }
 
     /**
@@ -66,16 +60,15 @@ public class NvLicense extends NvAbstractLicense {
      * @param vendor  vendor
      * @param hostId  host ID
      * @param expDate expiration date
-     * @param genDate generated date
      * @param version version
      *
      */
-    public NvLicense(String vendor, String hostId, long expDate, long genDate, String version) {
+    public NvLicense(String vendor, String hostId, long expDate, String version) {
 
+        this();
         this.vendor  = vendor;
         this.hostId  = hostId;
         expiration   = expDate;
-        generated    = genDate;
         this.version = version;
     }
 
@@ -85,18 +78,17 @@ public class NvLicense extends NvAbstractLicense {
      * @param vendor  vendor
      * @param hostId  host ID
      * @param expDate expiration date
-     * @param genDate generated date
      * @param version version
      *
      * @param ftr features
      *
      */
-    public NvLicense(String vendor, String hostId, long expDate, long genDate, String version, List<NvLicenseFeature> ftr) {
+    public NvLicense(String vendor, String hostId, long expDate, String version, List<NvLicenseFeature> ftr) {
 
+        this();
         this.vendor  = vendor;
         this.hostId  = hostId;
         expiration   = expDate;
-        generated    = genDate;
         this.version = version;
         features     = ftr;
     }
@@ -200,7 +192,6 @@ public class NvLicense extends NvAbstractLicense {
             features = new ArrayList<>();
         }
 
-        feature.setVendorName(getVendor());
         features.add(feature);
     }
 
@@ -287,29 +278,6 @@ public class NvLicense extends NvAbstractLicense {
         }
     }
 
-    /**
-     * Verify the license signature using a public key. This is a shortcut for
-     * LicenseUtils.verify(this, publicKey);
-     *
-     * @param  PUBLIC_KEY public key as string
-     * @throws GeneralSecurityException security exception with error message
-     */
-    public boolean verify(String PUBLIC_KEY) throws GeneralSecurityException {
-        return LicenseUtils.verify(this, PUBLIC_KEY);
-    }
-
-    /**
-     * When deserialization finishes, we must update all feature vendors from the license.
-     *
-     */
-    @Override
-    public void afterDeserialize() {
-
-        this.features.forEach(
-            (k) -> {
-                k.setVendorName(this.getVendor());
-            });
-    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // Fields

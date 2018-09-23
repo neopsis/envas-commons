@@ -50,12 +50,48 @@ public abstract class NvAbstractLicense {
     }
 
     /**
-     * Verify the license signature using a public key
+     * Sign the license with the PRIVATE_KEY. This is a shortcut for LicenseUtils.sign(...)
      *
-     * @param PUBLIC_KEY public key as string
+     * @param PRIVATE_KEY     private key as a hex string
+     * @throws GeneralSecurityException
+     */
+    public void sign(final String PRIVATE_KEY) throws GeneralSecurityException {
+        LicenseUtils.sign(this, PRIVATE_KEY);
+    }
+
+    /**
+     * Sign the license with the PRIVATE_KEY and algorithm. This is a shortcut for LicenseUtils.sign(...)
+     *
+     * @param PRIVATE_KEY    private key as a hex string
+     * @param sigAlgorithm   algorithm for the signature (SHA1withDSA, ...)
+     * @param provider       algorithm provider (SUN, ...)
+     * @throws GeneralSecurityException
+     */
+    public void sign(final String PRIVATE_KEY, String sigAlgorithm, String provider) throws GeneralSecurityException {
+        LicenseUtils.sign(this, PRIVATE_KEY, sigAlgorithm, provider);
+    }
+
+    /**
+     * Verify the license signature using a public key. This is a shortcut for
+     * LicenseUtils.verify(this, publicKey);
+     *
+     * @param  PUBLIC_KEY public key as string
      * @throws GeneralSecurityException security exception with error message
      */
-    public abstract boolean verify(String PUBLIC_KEY) throws GeneralSecurityException;
+    public boolean verify(String PUBLIC_KEY) throws GeneralSecurityException {
+        return LicenseUtils.verify(this, PUBLIC_KEY);
+    }
+
+    /**
+     * Verify the license signature using a public key. This is a shortcut for
+     * LicenseUtils.verify(this, publicKey, algorithm, provider);
+     *
+     * @param  PUBLIC_KEY public key as string
+     * @throws GeneralSecurityException security exception with error message
+     */
+    public boolean verify(String PUBLIC_KEY, String sigAlgorithm, String provider) throws GeneralSecurityException {
+        return LicenseUtils.verify(this, PUBLIC_KEY, sigAlgorithm, provider);
+    }
 
     /**
      * Parsing callback called after the license object was created and before
