@@ -189,6 +189,12 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
      */
     @Override
     public String getVendorName() {
+
+        // compatibility with 1.0
+        if (vendorName == null) {
+            return "neopsis";
+        }
+
         return vendorName;
     }
 

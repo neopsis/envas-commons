@@ -224,7 +224,9 @@ public class NvLicense extends NvAbstractLicense {
 
         checkExpiration();
         validateHostId(Nre.getHostId().toLowerCase());
-        verify(publicKey);
+        if( !verify(publicKey)) {
+            throw new GeneralSecurityException("Envas license is not valid or has been tampered with since it was created!");
+        };
     }
 
     /**

@@ -75,4 +75,35 @@ try {
 } catch (LicenseDatabaseException e) {
    ...
 }
-```      
+```     
+
+
+#### Module signing
+
+Starting from Niagara 4.6 Tridium requires module signing when using reflection. Because both utilities, 
+Message Bus and JSON, are using reflection, you have to sign the module. A short how to:
+
+1. In the Gradle file `envasCommons-rt.gradle` replace the `cert-alias` with your certification string.
+   Example:
+   
+```java
+niagaraModule {
+    preferredSymbol = "env"
+    moduleName = "envasCommons"
+    runtimeProfile = "rt"
+    certAlias = "mycompany-cert"
+}
+```     
+
+2. Execute the Gradle `jar` task. In the directory `~/.tridium/security` you will find the following 
+   new keystore with your new private key and the XML file describing your security profile with
+   keystore and private key passwords.
+
+   * mycompany_signing.jks
+   * mycompany_signing.xml
+   
+3. From the command shell execute the folllowing command to generate a new, self-signed certificate
+
+`keytool -exportcert -alias neopsis-cert -keypass <passwd> -storepass <passwd> -keystore mycompany_signing.jks -rfc -file mycompany-cert.pem`
+
+4. Import the new certificate into your Workbench and into any station platform using `envasCommons`.

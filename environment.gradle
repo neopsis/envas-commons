@@ -1,16 +1,23 @@
 /*
- * Copyright (c) 2016 Neopsis GmbH, All Rights Reserved
+ * Copyright 2019 Neopsis, All Rights Reserved.
  */
+/* Environment Configuration File */
 
-ext {
-    niagara_version      = "4.4"
-    niagara_release      = "4.4.73.24"
-    // niagara_version      = "4.6"
-    // niagara_release      = "4.6.96.28"
+// Change niagara_home and niagara_user_home as needed to point to the
+// correct path to your desired Niagara install and its associated
+// user home
+gradle.ext.niagara_dev_home = "C:/Projects/Envas/Workspace/N4/envasCommons"
+gradle.ext.niagara_home = "c:/niagara/niagara-4.6.96.28"
+gradle.ext.niagara_user_home = "C:/Users/robert/Niagara4.6/tridium"
+
+gradle.ext {
+    niagara_version      = "4.6"
+    niagara_release      = "4.6.96.28"
     niagara_test_version = "4.7"
-    niagara_test_release = "4.7.108.2"
+    niagara_test_release = "4.7.109.20"
     niagara_home         = "C:/Niagara/Niagara-${niagara_release}"
     niagara_user_home    = "C:/Users/robert/Niagara${niagara_version}/tridium"
-    niagara_dev_home     = "C:/Users/robert/Niagara${niagara_version}/tridium"
+    niagara_dev_home     = "C:/Projects/Envas/Workspace/N4/envasCommons"
     niagara_test_home    = "C:/Niagara/Niagara-${niagara_test_release}"
+    niagara_modules      = "C:/Niagara/Modules"
 }
