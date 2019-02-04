@@ -6,6 +6,9 @@ we've found that we need tools that Niagara framework can not offer us.
 Envas commons packs some usefull open source projects and a lot of our Java code
 into a free Niagara module. Envas commons is licensed under Apache 2.0 license. 
 
+You can download the compiled and with Neopsis certificate signed module `envasCommons.jar` 
+from project releases menu.
+
 #### Message Bus
 
 In Niagara you can subscribe for events on BComponent slots. Unfortunately, there is no 
@@ -77,33 +80,47 @@ try {
 }
 ```     
 
-
 #### Module signing
 
-Starting from Niagara 4.6 Tridium requires module signing when using reflection. Because both utilities, 
-Message Bus and JSON, are using reflection, you have to sign the module. A short how to:
+Starting from Niagara 4.7 Tridium requires module signing when using reflection. Because both utilities, 
+Message Bus and JSON, are using reflection, you have to sign the module.
 
-1. In the Gradle file `envasCommons-rt.gradle` replace the `cert-alias` with your certification string.
-   Example:
+Tridium uses a keystore for storing the keys and the signing certificates. The keystore location is 
+`%user_home%\.tridium\security\<vendor>_signing.jks`. The keystore password and primary key passwords of
+all keystone entries are stored in the profile file `%user_home%\.tridium\security\<vendor>_signing.xml`. 
+If the keystore and the XML profile do not exist, they will be created for you when the jar task runs 
+for the first time and will be filled with the random generated values. You can use the 
+[Keystore Explorer](https://keystore-explorer.org) for the keystore entry review. 
+
+For production sites, the usage of the certificates signed by a Certification Authority is highly adviced. 
+Using the cheapest [Comodo certificates](https://codesigncert.com/comodocodesigning) is OK. Because 
+the Niagara System Trust Store stores the Comodo CA root certificate, you do not have to deploy your 
+CA-signed certificate along with your module. 
+
+A short how to for self-signed certificates (OK for development):
+
+1. In the Gradle file `envasCommons-rt.gradle` replace the `cert-alias` with a name identifying your
+   code signing entry (e.g. private/public key pair) in the keystore. Example:
    
-```java
+```
 niagaraModule {
     preferredSymbol = "env"
     moduleName = "envasCommons"
     runtimeProfile = "rt"
-    certAlias = "mycompany-cert"
+    certAlias = "mycompany-code-sign"
 }
 ```     
 
 2. Execute the Gradle `jar` task. In the directory `~/.tridium/security` you will find the following 
-   new keystore with your new private key and the XML file describing your security profile with
-   keystore and private key passwords.
+   new keystore with your new private/public keypair and the XML file describing your security profile with
+   the keystore and private key passwords.
 
-   * mycompany_signing.jks
-   * mycompany_signing.xml
+   ```
+   mycompany_signing.jks
+   mycompany_signing.xml
+   ``` 
    
-3. From the command shell execute the folllowing command to generate a new, self-signed certificate
-
-`keytool -exportcert -alias neopsis-cert -keypass <passwd> -storepass <passwd> -keystore mycompany_signing.jks -rfc -file mycompany-cert.pem`
-
-4. Import the new certificate into your Workbench and into any station platform using `envasCommons`.
+3.You can use the [Keystore Explorer](https://keystore-explorer.org) to review the keystore entries 
+  and for the self-signed certificate export.
+   
+4. Import the exported certificate into your Workbench and into any station platform running `envasCommons`.

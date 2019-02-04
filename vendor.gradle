@@ -2,8 +2,5 @@
  * Copyright 2019 Neopsis, All Rights Reserved.
  */
 /* Vendor Configuration File */
-group = 'Neopsis'
-
-def moduleVersion = '4.0'
-def moduleVersionPatch = [2:0]
-version = "${moduleVersion}${moduleVersionPatch.get(project.name, '')}"
+group   = 'Neopsis'
+version = '4.0.2'
