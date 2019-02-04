@@ -14,7 +14,7 @@ niagaraModule {
     preferredSymbol = "env"
     moduleName = "envasCommons"
     runtimeProfile = "rt"
-    certAlias = "neopsis-cert"
+    certAlias = "neopsis-code-sign"
 }
 
 // *******************************************************

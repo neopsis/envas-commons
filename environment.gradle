@@ -3,13 +3,6 @@
  */
 /* Environment Configuration File */
 
-// Change niagara_home and niagara_user_home as needed to point to the
-// correct path to your desired Niagara install and its associated
-// user home
-gradle.ext.niagara_dev_home = "C:/Projects/Envas/Workspace/N4/envasCommons"
-gradle.ext.niagara_home = "c:/niagara/niagara-4.6.96.28"
-gradle.ext.niagara_user_home = "C:/Users/robert/Niagara4.6/tridium"
-
 gradle.ext {
     niagara_version      = "4.6"
     niagara_release      = "4.6.96.28"
