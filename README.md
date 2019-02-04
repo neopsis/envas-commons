@@ -120,7 +120,7 @@ niagaraModule {
    mycompany_signing.xml
    ``` 
    
-3.You can use the [Keystore Explorer](https://keystore-explorer.org) to review the keystore entries 
-  and for the self-signed certificate export.
+3. Use the [Keystore Explorer](https://keystore-explorer.org) to review the keystore entries 
+   and to export the self-signed certificate.
    
 4. Import the exported certificate into your Workbench and into any station platform running `envasCommons`.
