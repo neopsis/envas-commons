@@ -1,0 +1,92 @@
+/*
+ * Copyright (c) 2016 Neopsis GmbH. All Rights Reserved.
+ */
+
+description = "Envas - Commons for Niagara4"
+
+niagaraModule {
+    preferredSymbol = "env"
+    moduleName      = "envasCommons"
+    runtimeProfile  = "rt"
+    certAlias       = "neopsis-code-sign"
+}
+
+// *******************************************************
+//               Niagara needs Compact3
+// *******************************************************
+compileJava {
+    options.compilerArgs = ["-profile", "compact3"]
+}
+
+// *******************************************************
+//               Build dependencies
+// *******************************************************
+dependencies {
+
+    compile "Tridium:nre:4.0"
+    compile "Tridium:baja:4.0"
+
+    uberjar 'net.engio:mbassador:1.3.1'
+    uberjar 'com.alibaba:fastjson:1.2.46'
+
+    testCompile('junit:junit:4.12') {
+        exclude group: 'org.hamcrest'
+    }
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+}
+
+// *******************************************************
+//      Source set layout
+// *******************************************************
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }    
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
+}
+
+// *******************************************************
+//          Make jar
+// *******************************************************
+
+jar {
+    
+    includeEmptyDirs = true
+
+    exclude 'maven/'
+    exclude 'services/'
+    exclude 'NOTICE.txt'
+    exclude 'META-INF/services/**'
+    exclude 'META-INF/maven/**'
+    exclude 'META-INF/NOTICE.txt'
+
+    doLast {
+        [gradle.ext.niagara_test_home + '/modules', gradle.ext.niagara_modules].each { dest ->
+            copy {
+                from(project.buildDir.toString() + '/libs')
+                include(baseName + '-' + version + '.jar')
+                rename(baseName + '-' + version + '.jar', baseName + '.jar')
+                into { file(dest) }
+            }
+        }
+    }
+}
+
+/**
+ *   Avoid error messages due to missing Javadoc items
+ */
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
+
