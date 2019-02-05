@@ -30,20 +30,18 @@ ext {
     // This will include ALL sub-folders as sub-projects.
     niagaraRoots = ['.']
     // To explicitly define sub-project folders, name them in the array like this
-    //niagaraRoots = ['componentLinks', 'envCtrlDriver']
+    // niagaraRoots = ["${rootProject.name}-rt","${rootProject.name}-ux","${rootProject.name}-wb"]
 
     // CONFIGURE any directories to exclude from search for nested sub-projects
     excludeDirs = ['.hg', 'build', 'out', 'src', 'srcTest']
 }
 
 // OR set the 'userRepos' gradle property.
-//
 if (hasProperty('userRepos')) {
     settings.ext.niagaraRoots += userRepos.split(",").collect()
 }
 
 // my-settings.gradle.
-//
 def mySettings = file('my-settings.gradle')
 if (mySettings.exists()) {
     apply from: mySettings

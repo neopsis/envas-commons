@@ -13,7 +13,7 @@ repositories {
     dirs "${rootProject.ext.niagara_home}/bin/ext"
   }
   flatDir {
-    name = "Nigara Modules"
+    name = "Niagara Modules"
     dirs "${rootProject.ext.niagara_home}/modules"
   }
   mavenCentral()

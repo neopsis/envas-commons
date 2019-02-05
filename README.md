@@ -6,8 +6,8 @@ we've found that we need tools that Niagara framework can not offer us.
 Envas commons packs some usefull open source projects and a lot of our Java code
 into a free Niagara module. Envas commons is licensed under Apache 2.0 license. 
 
-You can download the compiled and with Neopsis certificate signed module `envasCommons.jar` 
-from project releases menu.
+You can download the compiled and with Neopsis certificate signed module `envasCommons-rt.jar` 
+from [project release menu](https://github.com/neopsis/envas-commons/releases).
 
 #### Message Bus
 

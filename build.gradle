@@ -7,6 +7,7 @@ plugins {
     id 'com.tridium.niagara' apply false
     id 'com.tridium.niagara-module' apply false
     id 'com.tridium.niagara-rjs' apply false
+    id "org.zeroturnaround.gradle.jrebel" version "1.1.8"
 }
 
 import com.tridium.gradle.plugins.niagara.task.RunNiagaraTestTask
@@ -34,6 +35,17 @@ gradle.beforeProject { p ->
         apply from: "${rootDir}/gradle/niagara.gradle"
         tasks.withType(RunNiagaraTestTask) { RunNiagaraTestTask task ->
             task.groups = []
+        }
+    }
+}
+
+// Add JRebel plugin. If you do not use JRebel, comment out or delete
+allprojects { project ->
+    plugins.withId('java') {
+        project.apply plugin: 'org.zeroturnaround.gradle.jrebel'
+        def jarTask = project.tasks.findByName('jar')
+        if (jarTask) {
+            jarTask.dependsOn(generateRebel)
         }
     }
 }
