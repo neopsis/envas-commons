@@ -1,6 +1,5 @@
 
-/.gradle/
-/.idea/
-/Win-0000-1234-ABCD-FFFF.l4e
-envasCommons/envasCommons-rt/build/**
-
+.gradle
+.idea
+Win-0000-1234-ABCD-FFFF.l4e
+build
