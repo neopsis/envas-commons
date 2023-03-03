@@ -49,3 +49,36 @@ allprojects { project ->
         }
     }
 }
+
+task buildZip(type: Zip) {
+
+    group 'niagara'
+
+    dependsOn 'envasCommons-rt:clean'
+    dependsOn 'envasCommons-rt:jar'
+
+    apply from: file("${rootDir}/vendor.gradle")
+
+    def baseName     = rootProject.name
+    def version      = rootProject.version
+    def outputFile   = file("${gradle.ext.niagara_modules}/release.txt")
+
+    outputs.file outputFile
+    outputFile.write  baseName + ": " + version + "\n"
+    outputFile.append "niagara: " + "${gradle.ext.niagara_release}"
+
+
+    from "${gradle.ext.niagara_modules}"
+    include baseName + "-*-" + version + ".jar"
+    include "release.txt"
+
+    rename   baseName + '-(.+)-' + version + '.jar',  baseName + '-$1.jar'
+
+    archiveName    = baseName + '-' + version  + '.zip'
+    destinationDir = file(file("${gradle.ext.niagara_modules}").getParent())
+
+    doLast {
+        outputFile.delete()
+    }
+
+}

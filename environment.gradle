@@ -3,14 +3,6 @@
  */
 /* Environment Configuration File */
 
-gradle.ext {
-    niagara_version      = "4.6"
-    niagara_release      = "4.6.96.28"
-    niagara_test_version = "4.7"
-    niagara_test_release = "4.7.109.20"
-    niagara_home         = "C:/Niagara/Niagara-${niagara_release}"
-    niagara_user_home    = "C:/Users/robert/Niagara${niagara_version}/tridium"
-    niagara_dev_home     = "C:/Projects/Envas/Workspace/N4/envasCommons"
-    niagara_test_home    = "C:/Niagara/Niagara-${niagara_test_release}"
-    niagara_modules      = "C:/Niagara/Modules"
-}
+gradle.ext.envDir  = "C:\\Niagara\\Development"
+gradle.ext.envFile = "${gradle.ext.envDir}\\environment.gradle"
+apply from: "${gradle.ext.envFile}"
