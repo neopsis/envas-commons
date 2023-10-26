@@ -72,6 +72,15 @@ jar {
             into { file("${gradle.ext.niagara_modules}") }
         }
     }
+
+    manifest {
+        attributes 'Implementation-Title': 'Envas Commons',
+                'Implementation-Version': version,
+                'Built-Date': new Date(),
+                'Built-JDK': System.getProperty('java.version'),
+                'Multi-Release': true,
+                'Automatic-Module-Name': 'com.neopsis.envas.commons.rt'
+    }
 }
 
 /**
