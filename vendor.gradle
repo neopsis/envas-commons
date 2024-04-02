@@ -1,6 +1,29 @@
 /*
  * Copyright 2019 Neopsis, All Rights Reserved.
+ *
+ *   Vendor Configuration File
+ *
+ *   All Envas modules have common source code, there are no Niagara version
+ *   specific parts. However, Niagara dependencies in module jar files
+ *   are always updated to the current Niagara environment.
+ *
+ *   For example, when making envasCommons in the Niagara 4.12 environment,
+ *   the dependencies in the module envasCommons-rt.jar will be
+ *   <pre>
+ *     compile "Tridium:nre:4.12"
+ *     compile "Tridium:baja:4.12"
+ *   </pre>
+ *   and you cannot install the module in Niagara < 4.12. Modules for Niagara 4.7
+ *   can be installed in all environments >= Niagara 4.7
  */
-/* Vendor Configuration File */
 group   = 'Neopsis'
-version = '4.0.4'
+
+// new Envas numbering follows the Niagara versioning
+// ex.:  4.12.0.4
+//  4 = Niagara4
+// 12 = Niagara major version
+//  0 = Envas major version
+//  4 = Envas patch for major version
+def envasVersion =  "0"
+def envasPatch   =  "4"
+version = "${gradle.ext.niagara_version}.${envasVersion}.${envasPatch}"
