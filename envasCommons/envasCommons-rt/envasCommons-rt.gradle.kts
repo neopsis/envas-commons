@@ -51,13 +51,4 @@ tasks.jar {
     exclude("META-INF/maven/**")
     exclude("META-INF/NOTICE.txt")
 
-//    manifest {
-//        attributes["Implementation-Title"] = "Envas Commons"
-//        attributes["Implementation-Version"] = vendor.defaultModuleVersion
-//        attributes["Built-Date"] = LocalDate.now()
-//        attributes["Built-JDK"] = System.getProperty("java.version")
-//        attributes["Multi-Release"] = true
-//        attributes["Automatic-Module-Name"] = "com.neopsis.envas.commons.rt"
-//    }
-
 }
