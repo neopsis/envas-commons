@@ -12,8 +12,9 @@ plugins {
     id("neopsis-project-plugin")
 }
 
-neopsisParts {
+bundle {
     description   = "Envas Commons"
+    moduleName    = "envasCommons"
     moduleVersion = "0.5"
 }
 
