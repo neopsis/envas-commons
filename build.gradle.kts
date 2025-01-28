@@ -4,12 +4,13 @@
 
 repositories {
     maven(url = providers.gradleProperty("niagaraToolsHome").get() + "/gradlePlugins")
+    maven(url = uri("https://repo.repsy.io/mvn/neopsis/niagara"))
     mavenCentral()
     gradlePluginPortal()
 }
 
 plugins {
-    id("neopsis-project-plugin")
+    id("com.neopsis.niagara-project-plugin")
 }
 
 bundle {

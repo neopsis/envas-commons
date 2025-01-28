@@ -4,10 +4,11 @@
 
 import com.tridium.gradle.plugins.module.util.ModulePart.RuntimeProfile.rt
 import com.tridium.gradle.plugins.niagara.NiagaraProjectLayout
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import java.time.LocalDate
 
 plugins {
-    id("neopsis-module-plugin")
+    id("com.neopsis.niagara-module-plugin")
 }
 
 description = "Envas - Commons for Niagara4"

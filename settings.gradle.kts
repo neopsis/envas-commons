@@ -3,26 +3,29 @@
  *
  */
 
-
 pluginManagement {
 
     val neopsisPluginVersion: String by System.getProperties()
 
     repositories {
+
         maven(url = providers.gradleProperty("niagaraToolsHome").get() + "/gradlePlugins")
+        maven(url = uri("https://repo.repsy.io/mvn/neopsis/niagara"))
         mavenCentral()
+        // mavenLocal()
         gradlePluginPortal()
+
     }
 
     plugins {
-        id("neopsis-project-plugin")    version (neopsisPluginVersion)
-        id("neopsis-module-plugin")     version (neopsisPluginVersion)
-        id("neopsis-settings-plugin")   version (neopsisPluginVersion)
+        id("com.neopsis.niagara-settings-plugin") version (neopsisPluginVersion)
+        id("com.neopsis.niagara-project-plugin")   version (neopsisPluginVersion)
+        id("com.neopsis.niagara-module-plugin")   version (neopsisPluginVersion)
     }
 }
 
 plugins {
-    id("neopsis-settings-plugin")
+    id("com.neopsis.niagara-settings-plugin")
 }
 
 rootProject.name = "envasCommons"
