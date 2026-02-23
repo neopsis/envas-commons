@@ -31,7 +31,7 @@ dependencies {
     uberjar("net.engio:mbassador:1.3.2")
     uberjar("com.alibaba:fastjson:1.2.73")
 
-    testImplementation("junit:junit:4.12") {
+    testImplementation("junit:junit:4.13.2") {
         exclude(group="org.hamcrest")
     }
     testImplementation("org.hamcrest:hamcrest-library:1.3")
