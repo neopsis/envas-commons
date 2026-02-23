@@ -7,17 +7,16 @@
  */
 
 
-
 package com.neopsis.envas.commons.license;
 
-import com.alibaba.fastjson.annotation.JSONField;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.neopsis.envas.commons.license.util.LicenseUtils;
 
 import java.security.GeneralSecurityException;
 
 /**
- * Subclasses should add license specific fields.
+ * Subclasses should add license-specific fields.
  * All licenses have a signature, it's here.
  *
  */
@@ -25,14 +24,16 @@ public abstract class NvAbstractLicense {
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // Fields
-    ///////////////////////////////////////////////////////////////////////////////////////////
+    /// ////////////////////////////////////////////////////////////////////////////////////////
     @JSONField(name = "signature")
     protected String signature;
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // Constructors
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    public NvAbstractLicense() {}
+
+    /// ////////////////////////////////////////////////////////////////////////////////////////
+    public NvAbstractLicense() {
+    }
 
     public NvAbstractLicense(String signature) {
         this.signature = signature;
@@ -40,7 +41,8 @@ public abstract class NvAbstractLicense {
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // Getters/Setters
-    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    /// ////////////////////////////////////////////////////////////////////////////////////////
     public String getSignature() {
         return signature;
     }
@@ -52,7 +54,7 @@ public abstract class NvAbstractLicense {
     /**
      * Sign the license with the PRIVATE_KEY. This is a shortcut for LicenseUtils.sign(...)
      *
-     * @param PRIVATE_KEY     private key as a hex string
+     * @param PRIVATE_KEY private key as a hex string
      * @throws GeneralSecurityException
      */
     public void sign(final String PRIVATE_KEY) throws GeneralSecurityException {
@@ -62,9 +64,9 @@ public abstract class NvAbstractLicense {
     /**
      * Sign the license with the PRIVATE_KEY and algorithm. This is a shortcut for LicenseUtils.sign(...)
      *
-     * @param PRIVATE_KEY    private key as a hex string
-     * @param sigAlgorithm   algorithm for the signature (SHA1withDSA, ...)
-     * @param provider       algorithm provider (SUN, ...)
+     * @param PRIVATE_KEY  private key as a hex string
+     * @param sigAlgorithm algorithm for the signature (SHA1withDSA, ...)
+     * @param provider     algorithm provider (SUN, ...)
      * @throws GeneralSecurityException
      */
     public void sign(final String PRIVATE_KEY, String sigAlgorithm, String provider) throws GeneralSecurityException {
@@ -75,7 +77,7 @@ public abstract class NvAbstractLicense {
      * Verify the license signature using a public key. This is a shortcut for
      * LicenseUtils.verify(this, publicKey);
      *
-     * @param  PUBLIC_KEY public key as string
+     * @param PUBLIC_KEY public key as string
      * @throws GeneralSecurityException security exception with error message
      */
     public boolean verify(String PUBLIC_KEY) throws GeneralSecurityException {
@@ -86,7 +88,7 @@ public abstract class NvAbstractLicense {
      * Verify the license signature using a public key. This is a shortcut for
      * LicenseUtils.verify(this, publicKey, algorithm, provider);
      *
-     * @param  PUBLIC_KEY public key as string
+     * @param PUBLIC_KEY public key as string
      * @throws GeneralSecurityException security exception with error message
      */
     public boolean verify(String PUBLIC_KEY, String sigAlgorithm, String provider) throws GeneralSecurityException {

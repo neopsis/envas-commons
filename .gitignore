@@ -2,3 +2,4 @@
 .gradle
 Win-0000-1234-ABCD-FFFF.l4e
 build
+/envasCommons/yarn.lock

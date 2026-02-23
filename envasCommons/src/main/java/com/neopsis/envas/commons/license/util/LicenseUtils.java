@@ -7,15 +7,18 @@
  */
 
 
-
 package com.neopsis.envas.commons.license.util;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.alibaba.fastjson.serializer.JSONSerializer;
-import com.alibaba.fastjson.serializer.SerializeConfig;
-import com.alibaba.fastjson.serializer.SerializeWriter;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+//import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.parser.ParserConfig;
+//import com.alibaba.fastjson.serializer.JSONSerializer;
+//import com.alibaba.fastjson.serializer.SerializeConfig;
+//import com.alibaba.fastjson.serializer.SerializeWriter;
+//import com.alibaba.fastjson.serializer.SerializerFeature;
+
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONReader;
+import com.alibaba.fastjson2.JSONWriter;
 import com.neopsis.envas.commons.license.NvAbstractLicense;
 
 import javax.crypto.KeyGenerator;
@@ -94,7 +97,6 @@ public class LicenseUtils {
      *
      * @param encodedKey encoded byte array
      * @return public key
-     *
      * @throws NoSuchAlgorithmException wrong algorithm (should not occur)
      * @throws NoSuchProviderException  wrong provider (should not occur)
      * @throws InvalidKeySpecException  invalid key (should not occur)
@@ -111,7 +113,6 @@ public class LicenseUtils {
      * @param encodedKey   the encoded public key in bytes.
      * @param kpgAlgorithm key pair algorithm
      * @param provider     provider
-     *
      * @throws NoSuchAlgorithmException wrong algorithm
      * @throws NoSuchProviderException  wrong provider
      * @throws InvalidKeySpecException  invalid key (should not occur)
@@ -133,9 +134,7 @@ public class LicenseUtils {
      * </ul>
      *
      * @param encodedKey encoded byte array
-     *
      * @return private key
-     *
      * @throws NoSuchAlgorithmException
      * @throws NoSuchProviderException
      * @throws InvalidKeySpecException
@@ -148,6 +147,7 @@ public class LicenseUtils {
     /**
      * This method gets the private key from the encoded byte.
      * The bytes can be recovered from a Hex string saved in a file etc.
+     *
      * @param encodedKey the encoded private key in bytes.
      */
     public static PrivateKey getPrivate(byte[] encodedKey, String kpgAlgorithm, String provider)
@@ -168,7 +168,6 @@ public class LicenseUtils {
      * </ul>
      *
      * @return a new key pair
-     *
      * @throws NoSuchAlgorithmException invalid algorithm
      * @throws NoSuchProviderException  invalid provider
      */
@@ -179,12 +178,11 @@ public class LicenseUtils {
     /**
      * Generates the key pair with arguments.
      *
-     * @param   keyLen         key length
-     * @param   kpgAlgorithm   algorithm for key pair generator (DSA, RSA, ...)
-     * @param   provider       algorithm provider (SUN, ...)
-     * @param   rngAlgorithm   algorithm for random generator (SHA1PRNG, ...)
-     * @return                 a new key pair
-     *
+     * @param keyLen       key length
+     * @param kpgAlgorithm algorithm for key pair generator (DSA, RSA, ...)
+     * @param provider     algorithm provider (SUN, ...)
+     * @param rngAlgorithm algorithm for random generator (SHA1PRNG, ...)
+     * @return a new key pair
      * @throws NoSuchAlgorithmException invalid algorithm
      * @throws NoSuchProviderException  invalid provider
      *
@@ -212,8 +210,8 @@ public class LicenseUtils {
      *     <li>provider = SUN</li>
      * </ul>
      *
-     * @param lic            the license.
-     * @param publicKey      public key as a hex string
+     * @param lic       the license.
+     * @param publicKey public key as a hex string
      * @return a boolean whether the license data is valid.
      * @throws GeneralSecurityException if any exception was thrown
      */
@@ -225,10 +223,10 @@ public class LicenseUtils {
      * Validates the license using the signature from the license. Algorithm and provider
      * are passed a arguments
      *
-     * @param lic            the license.
-     * @param publicKey      public key as a hex string
-     * @param sigAlgorithm   algorithm for the signature (SHA1withDSA, ...)
-     * @param provider       algorithm provider (SUN, ...)
+     * @param lic          the license.
+     * @param publicKey    public key as a hex string
+     * @param sigAlgorithm algorithm for the signature (SHA1withDSA, ...)
+     * @param provider     algorithm provider (SUN, ...)
      * @return a boolean whether the license data is valid.
      * @throws GeneralSecurityException if any exception was thrown
      */
@@ -286,8 +284,8 @@ public class LicenseUtils {
      *     <li>provider = SUN</li>
      * </ul>
      *
-     * @param lic            the license.
-     * @param privateKey     private key as a hex string
+     * @param lic        the license.
+     * @param privateKey private key as a hex string
      * @return a boolean whether the license data is valid.
      * @throws GeneralSecurityException if any exception was thrown
      */
@@ -298,12 +296,11 @@ public class LicenseUtils {
     /**
      * Signes the license data based on the private key. Algorithm and provider are passed as arguments.
      *
-     * @param lic            the license.
-     * @param privateKey     private key as a hex string
-     * @param sigAlgorithm   algorithm for the signature (SHA1withDSA, ...)
-     * @param provider       algorithm provider (SUN, ...)
-     *
-     * @param lic the license.
+     * @param lic          the license.
+     * @param privateKey   private key as a hex string
+     * @param sigAlgorithm algorithm for the signature (SHA1withDSA, ...)
+     * @param provider     algorithm provider (SUN, ...)
+     * @param lic          the license.
      * @throws GeneralSecurityException if any exception was thrown
      */
     public static void sign(NvAbstractLicense lic, final String privateKey, String sigAlgorithm, String provider)
@@ -346,7 +343,7 @@ public class LicenseUtils {
     /**
      * Converts a license Java object to the JSON string with PrettyFormat feature
      *
-     * @param license  the license as Java object
+     * @param license the license as a Java object
      * @return the license as JSON string
      */
     public static String toJson(NvAbstractLicense license) {
@@ -354,91 +351,60 @@ public class LicenseUtils {
     }
 
     /**
-     * Converts a license Java object to the Json string. Using PrettyFormat
-     * generates better human readable Json string.
+     * Converts a license Java object to the JSON string. Using PrettyFormat
+     * generates a better human-readable JSON string.
      *
-     * @param license  the license as Java object
+     * @param license      the license as a Java object
      * @param prettyFormat true if output should be pretty formatted
-     * @return the license as Json string
+     * @return the license as JSON string
      */
     public static String toJson(NvAbstractLicense license, boolean prettyFormat) {
 
-        SerializeWriter out    = new SerializeWriter();
-        SerializeConfig config = new SerializeConfig();
+        JSONWriter.Context context = new JSONWriter.Context();
+        context.setDateFormat(DATE_FORMAT);
 
-        try {
-
-            JSONSerializer serializer = new JSONSerializer(out, config);
-
-            serializer.config(SerializerFeature.WriteDateUseDateFormat, true);
-            serializer.config(SerializerFeature.PrettyFormat, prettyFormat);
-            serializer.setDateFormat(DATE_FORMAT);
-
-            // license.configureSerializer(config);
-            serializer.write(license);
-
-            return out.toString();
-
-        } finally {
-            out.close();
+        if (prettyFormat) {
+            context.config(JSONWriter.Feature.PrettyFormat);
         }
 
-        // return JSON.toJSONStringWithDateFormat(license, "YYYY-MM-dd", features);
+        return JSON.toJSONString(license, context);
     }
 
     /**
      * Converts a JSON string to the Java object. The JSON
-     * must be a serialization of {@link NvAbstractLicense} subclass
+     * must be serialization of {@link NvAbstractLicense} subclass
      *
      * @param json a license as JSON object
-     * @return  license as Java object
+     * @return license as Java object
      */
     public static <T extends NvAbstractLicense> T toObject(String json, Class<T> clazz)
             throws IllegalAccessException, InstantiationException {
-        return toObject(json, clazz, ParserConfig.getGlobalInstance());
+
+        JSONReader.Context context = new JSONReader.Context();
+        context.setDateFormat(DATE_FORMAT);
+
+        return toObject(json, clazz, context);
     }
 
     /**
      * Converts a JSON string to the Java object. The JSON
-     * must be a serialization of {@link NvAbstractLicense} subclass
+     * must be serialization of {@link NvAbstractLicense} subclass
      *
-     * @param json a license as JSON object
-     * @return  license as Java object
+     * @param json a license as a JSON object
+     * @return license as Java object
      */
-    public static <T extends NvAbstractLicense> T toObject(String json, Class<T> clazz, ParserConfig config)
+    public static <T extends NvAbstractLicense> T toObject(String json, Class<T> clazz, JSONReader.Context context)
             throws IllegalAccessException, InstantiationException {
 
-        T lic = JSON.parseObject(json, clazz);
-
-        /**
-         *  Currently a bug in FastJSON - DefaultJSONParser.parseObject() does not
-         *  accept field annotation @JSONField nd does not install custom
-         *  deserializer.
-         *
-         *  ! -> lic.beforeDeserialize is not called !
-         *
-        T lic = clazz.newInstance();
-
-        // lic.configureDeserializer(ParserConfig.getGlobalInstance());
-        lic.beforeDeserialize();
-
-        DefaultJSONParser parser = new DefaultJSONParser(json, config, DEFAULT_PARSER_FEATURE);
-        parser.parseObject(lic);
-        parser.close();
-
-        */
-
-        lic.afterDeserialize();
-
-        return lic;
+        return JSON.parseObject(json, clazz, context);
     }
 
     /**
      * Writes the license into a file
      *
-     * @param license      license object
-     * @param fileName     name of the license file
-     * @throws IOException error on file write occurred
+     * @param license  license object
+     * @param fileName name of the license file
+     * @throws IOException error on file writing occurred
      */
     public static void writeLicense(NvAbstractLicense license, String fileName) throws IOException, GeneralSecurityException {
 
@@ -455,8 +421,8 @@ public class LicenseUtils {
     /**
      * Reads the license from a file
      *
-     * @param fileName     name of the license file
-     * @throws IOException error on file write occurred
+     * @param fileName name of the license file
+     * @throws IOException an error on file writing occurred
      */
     public static <T extends NvAbstractLicense> T readLicense(String fileName, Class<T> clazz)
             throws IOException, GeneralSecurityException, InstantiationException, IllegalAccessException {

@@ -1,10 +1,10 @@
-package com.neopsis.envas.test;
+package test;
 
 public class TestRunner {
 
     public static void main(String[] args) {
 
-        Tests t = new Tests();
+        LicenseTest t = new LicenseTest();
 
         t.generateKeyPair();
         t.licensorTest();

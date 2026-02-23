@@ -7,14 +7,14 @@
  */
 
 
-
 package com.neopsis.envas.commons.license;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.neopsis.envas.commons.license.util.JulianDateCodec;
+import com.alibaba.fastjson2.annotation.JSONField;
+import com.neopsis.envas.commons.license.util.JulianDateReader;
+import com.neopsis.envas.commons.license.util.JulianDateWriter;
 import com.tridium.sys.Nre;
+import niagara.license.Feature;
 
-import javax.baja.license.Feature;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,15 +31,15 @@ public class NvLicense extends NvAbstractLicense {
     @JSONField(name = "hostId")
     private String                 hostId;
     @JSONField(
-        name             = "expiration",
-        serializeUsing   = JulianDateCodec.class,
-        deserializeUsing = JulianDateCodec.class
+            name = "expiration",
+            serializeUsing   = JulianDateWriter.class,
+            deserializeUsing = JulianDateReader.class
     )
-    public long                    expiration;
+    public  long                   expiration;
     @JSONField(
-        name             = "generated",
-        serializeUsing   = JulianDateCodec.class,
-        deserializeUsing = JulianDateCodec.class
+            name = "generated",
+            serializeUsing   = JulianDateWriter.class,
+            deserializeUsing = JulianDateReader.class
     )
     private long                   generated;
     @JSONField(name = "version")
@@ -52,6 +52,8 @@ public class NvLicense extends NvAbstractLicense {
      */
     public NvLicense() {
         generated = new Date().getTime();
+        // JSON.register(NvLicense.class, JulianDateWriter.INSTANCE);
+        // JSON.register(NvLicense.class, JulianDateReader.INSTANCE);
     }
 
     /**
@@ -79,8 +81,7 @@ public class NvLicense extends NvAbstractLicense {
      * @param hostId  host ID
      * @param expDate expiration date
      * @param version version
-     *
-     * @param ftr features
+     * @param ftr     features
      *
      */
     public NvLicense(String vendor, String hostId, long expDate, String version, List<NvLicenseFeature> ftr) {
@@ -95,7 +96,8 @@ public class NvLicense extends NvAbstractLicense {
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // Setters and Getters
-    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    /// ////////////////////////////////////////////////////////////////////////////////////////
     public String getVendor() {
         return vendor;
     }
@@ -224,9 +226,10 @@ public class NvLicense extends NvAbstractLicense {
 
         checkExpiration();
         validateHostId(Nre.getHostId().toLowerCase());
-        if( !verify(publicKey)) {
+        if (!verify(publicKey)) {
             throw new GeneralSecurityException("Envas license is not valid or has been tampered with since it was created!");
-        };
+        }
+        ;
     }
 
     /**
@@ -250,7 +253,7 @@ public class NvLicense extends NvAbstractLicense {
     /**
      * Check license expiration at some given date
      *
-     * @param checkDate  date to check expiration
+     * @param checkDate date to check expiration
      * @throws GeneralSecurityException security exception with error message
      */
     public void checkExpiration(Date checkDate) throws GeneralSecurityException {

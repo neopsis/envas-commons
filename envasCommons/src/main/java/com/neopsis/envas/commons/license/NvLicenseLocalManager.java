@@ -11,15 +11,12 @@
 package com.neopsis.envas.commons.license;
 
 import com.neopsis.envas.commons.license.util.LicenseUtils;
-import com.neopsis.envas.util.NvLog;
-
-import javax.baja.sys.Sys;
+import com.neopsis.envas.commons.util.NvLog;
+import niagara.sys.Sys;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.security.GeneralSecurityException;
-
 import java.util.ArrayList;
 
 /**

@@ -7,19 +7,16 @@
  */
 
 
-
 package com.neopsis.envas.commons.license;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
-import com.neopsis.envas.commons.license.util.JulianDateCodec;
-
+import com.alibaba.fastjson2.annotation.JSONField;
+import com.neopsis.envas.commons.license.util.JulianDateReader;
+import com.neopsis.envas.commons.license.util.JulianDateWriter;
 import com.tridium.sys.license.LicenseUtil;
-
-import javax.baja.license.Feature;
-import javax.baja.license.FeatureLicenseExpiredException;
-import javax.baja.license.FeatureNotLicensedException;
-import javax.baja.sys.Clock;
+import niagara.license.Feature;
+import niagara.license.FeatureLicenseExpiredException;
+import niagara.license.FeatureNotLicensedException;
+import niagara.sys.Clock;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,13 +33,13 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
     @JSONField(name = "feature")
     String                  featureName = null;
     @JSONField(
-        name                            = "expiration",
-        serializeUsing                  = JulianDateCodec.class,
-        deserializeUsing                = JulianDateCodec.class
+            name = "expiration",
+            serializeUsing   = JulianDateWriter.class,
+            deserializeUsing = JulianDateReader.class
     )
     long                    expiration;
     @JSONField(name = "options")
-    HashMap<String, Object> options = null;
+    HashMap<String, Object> options     = null;
 
     /**
      * Default constructor for reflection tools
@@ -54,8 +51,8 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
     /**
      * Constructor without expiration and options
      *
-     * @param vendorName   vendorName name
-     * @param featureName  feature name
+     * @param vendorName  vendorName name
+     * @param featureName feature name
      */
     public NvLicenseFeature(final String vendorName, final String featureName) {
 
@@ -66,9 +63,9 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
     /**
      * Constructor without options
      *
-     * @param vendorName   vendorName name
-     * @param featureName  feature name
-     * @param expDate      expiration date
+     * @param vendorName  vendorName name
+     * @param featureName feature name
+     * @param expDate     expiration date
      */
     public NvLicenseFeature(final String vendorName, final String featureName, final long expDate) {
 
@@ -80,10 +77,10 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
     /**
      * Constructor with options
      *
-     * @param vendorName   vendorName name
-     * @param featureName  feature name
-     * @param expDate      expiration date
-     * @param options      options map
+     * @param vendorName  vendorName name
+     * @param featureName feature name
+     * @param expDate     expiration date
+     * @param options     options map
      */
     public NvLicenseFeature(final String vendorName, final String featureName, final long expDate,
                             HashMap<String, Object> options) {
@@ -96,7 +93,8 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // Getters and Setters
-    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    /// ////////////////////////////////////////////////////////////////////////////////////////
     public void setVendorName(String vendorName) {
         this.vendorName = vendorName;
     }
@@ -139,8 +137,8 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
     /**
      * Add a featureName option
      *
-     * @param key     option key
-     * @param value   option value
+     * @param key   option key
+     * @param value option value
      */
     public void addOption(String key, Object value) {
         addOption(key, value, null);
@@ -149,8 +147,8 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
     /**
      * Add a featureName option
      *
-     * @param key      option key
-     * @param value   option value
+     * @param key   option key
+     * @param value option value
      */
     public void addOption(String key, Object value, Object defaultValue) {
 
@@ -250,7 +248,7 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
     /**
      * Returns a string option
      *
-     * @param option  option key
+     * @param option option key
      */
     @Override
     public String get(String option) {
@@ -268,8 +266,8 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
      * Returns a string option or a default value if option
      * not available
      *
-     * @param option  option key
-     * @param def default option value
+     * @param option option key
+     * @param def    default option value
      */
     @Override
     public String get(String option, String def) {
@@ -287,8 +285,8 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
      * Returns a boolean option or a default value if option
      * not available
      *
-     * @param option  option key
-     * @param def default option value
+     * @param option option key
+     * @param def    default option value
      */
     @Override
     public boolean getb(String option, boolean def) {
@@ -324,8 +322,8 @@ public class NvLicenseFeature implements Feature, Comparable<NvLicenseFeature> {
      * Returns an integer option or a default value if option
      * not available
      *
-     * @param option  option key
-     * @param def default option value
+     * @param option option key
+     * @param def    default option value
      */
     @Override
     public int geti(String option, int def) {

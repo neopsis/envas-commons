@@ -10,18 +10,15 @@
 
 package com.neopsis.envas.commons.license;
 
-import com.neopsis.envas.util.NvLog;
-
+import com.neopsis.envas.commons.util.NvLog;
 import com.tridium.sys.license.LicenseUtil;
-
-import javax.baja.license.Feature;
-import javax.baja.license.FeatureNotLicensedException;
-import javax.baja.license.LicenseDatabaseException;
-import javax.baja.license.LicenseManager;
-import javax.baja.nre.util.SortUtil;
+import niagara.license.Feature;
+import niagara.license.FeatureNotLicensedException;
+import niagara.license.LicenseDatabaseException;
+import niagara.license.LicenseManager;
+import niagara.nre.util.SortUtil;
 
 import java.security.GeneralSecurityException;
-
 import java.util.HashMap;
 import java.util.List;
 
