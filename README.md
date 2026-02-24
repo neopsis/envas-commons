@@ -89,6 +89,3 @@ try {
    ...
 }
 ```
-
-See the file `LicenseTest.java` in the test part of the project on how to create your own 
-signed license file that can replace the Tridium license files.
