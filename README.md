@@ -2,12 +2,15 @@
 
 Envas commons is a [Niagara](http://www.tridium.com) module containing useful utilities 
 for Niagara development. While developing our [Envas](http://www.envas.com) framework, 
-we've found that we need tools that Niagara framework can not offer us. 
-Envas commons packs some usefull open source projects and a lot of our Java code
-into a free Niagara module. Envas commons is licensed under Apache 2.0 license. 
+we've found that we need tools that a Niagara framework cannot offer us. 
+Envas commons packs some useful open source projects and a lot of our Java code
+into a free Niagara module. Envas commons are licensed under the Apache 2.0 license. 
 
 You can download the compiled and with Neopsis certificate signed module `envasCommons-rt.jar` 
 from [project release menu](https://github.com/neopsis/envas-commons/releases).
+
+> The project contains two branches. In the `main` branch you can find the version for Niagara4. 
+> In the `N5` branch you can find the version for Niagara5.
 
 #### Message Bus
 
@@ -28,13 +31,13 @@ today in all modern JSON handling libraries. We found an open source project
 [Fastjson](https://github.com/alibaba/fastjson) matching all our needs. Fastjson is 
 a Java library that can be used to convert Java Objects into their JSON representation. 
 It can also be used to convert a JSON string to an equivalent Java object. Fastjson can 
-work with arbitrary Java objects including pre-existing objects that you do not have
+work with arbitrary Java objects, including pre-existing objects that you do not have
 source-code of.
  
 Fast JSON 
 
  * Provides simple toJSONString() and parseObject() methods to convert Java objects to 
-   JSON and vice-versa
+   JSON and vice versa
  * Allows pre-existing unmodifiable objects to be converted to and from JSON
  * Supports Java Generics
  * Allows custom representations for objects
@@ -46,20 +49,20 @@ Fast JSON
 
 If you are going to issue a license for your Niagara custom module, you can use Niagara
 License Server to maintain your licenses. Unfortunately, Tridium does not offer any kind of
-automation when creating a license. To enter a license you need to do everything by hand,
-with lot of data entries and copy&paste work. It's time consuming and error-prone. That's 
+automation when creating a license. To enter a license, you need to do everything by hand,
+with a lot of data entries and copy&paste work. It's time-consuming and error-prone. That's 
 why we developed our own licensing. Envas licensing uses PKI infrastructure and implements
 the code for creating, signing and validation of Envas licenses. Licenses are issued 
 as text files in the JSON format. It is up to you how you generate and deploy the licenses.
-You can, for example, integrate the Envas licensing into your back office workflow - a customer 
-buys your driver on your web site, on the payment callback you will generate a license 
+You can, for example, integrate the Envas licensing into your back office workflow – a customer 
+buys your driver on your website, on the payment callback you will generate a license 
 that will be automatically sent to the customer or placed on your licensing server.  
  
 
 Envas licensing utilities implement Baja interfaces and are compatible with the original 
 Niagara framework. If you wish to move away from Tridium licensing to Envas licensing, 
 you need to change only one row of your code obtaining the license manager. Check the test
-project code for more details how to use the utility. Example of a feature check in Niagara:   
+project code for more details on how to use the utility. Example of a feature check in Niagara:   
 
 ```
 try {
@@ -97,7 +100,7 @@ Using the cheapest [Comodo certificates](https://codesigncert.com/comodocodesign
 the Niagara System Trust Store stores the Comodo CA root certificate, you do not have to deploy your 
 CA-signed certificate along with your module. 
 
-A short how to for self-signed certificates (OK for development):
+A short how-to for self-signed certificates (OK for development):
 
 1. In the Gradle file `envasCommons-rt.gradle` replace the `cert-alias` with a name identifying your
    code signing entry (e.g. private/public key pair) in the keystore. Example:
