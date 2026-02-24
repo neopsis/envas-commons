@@ -33,11 +33,11 @@ subscribe pattern. See the Github project pages for more details about MBassador
 >be found in the [Fastjson2](https://github.com/alibaba/fastjson2) GitHub project pages. 
 
 Although Niagara contains **JSON utilities**, we are missing a lot of features implemented
-today in all modern JSON handling libraries. We found an open source project ([Fastjson2](https://github.com/alibaba/fastjson2)
-matching all our needs. Fastjson is a Java library that can be used to convert 
-Java Objects into their JSON representation. It can also be used to convert a JSON string to an 
-equivalent Java object. Fastjson can work with arbitrary Java objects, including pre-existing 
-objects that you do not have source-code of.
+today in all modern JSON handling libraries. We found an open source project [Fastjson version 2]
+(https://github.com/alibaba/fastjson2) matching all our needs. Fastjson is a Java library that 
+can be used to convert Java Objects into their JSON representation. It can also be used to convert
+a JSON string to an equivalent Java object. Fastjson can work with arbitrary Java objects, 
+including pre-existing objects that you do not have source-code of.
  
 Fast JSON version 2
 
