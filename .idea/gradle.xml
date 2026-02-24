@@ -9,7 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/envasCommons/envasCommons-rt" />
+            <option value="$PROJECT_DIR$/envasCommons" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

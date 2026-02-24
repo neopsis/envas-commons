@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8" />
+    <bytecodeTargetLevel target="25" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="envasCommons.envasCommons" options="-Xlint:deprecation -Xlint:overrides -Xlint:unchecked -Werror --module-path &quot;C:\ProgramData\Niagara\tridium\config\5.0.0.1\modules\baja.jar;C:\Users\robert\.gradle\caches\modules-2\files-2.1\org.apache.xmlgraphics\batik-awt-util\1.19\858ea4772e2299af37cb2753202307a5c089602c\batik-awt-util-1.19.jar;C:\Program Files\Niagara\5.0.0.1\bin\ext\nre.jar;C:\Users\robert\.gradle\caches\modules-2\files-2.1\net.engio\mbassador\1.3.2\4ebb2c5f853bf8a5f87147b186a9758d2e2ec0af\mbassador-1.3.2.jar;C:\Users\robert\.gradle\caches\modules-2\files-2.1\com.alibaba.fastjson2\fastjson2\2.0.61\eaef1263aed935e7721fbc06450a86431ab07c00\fastjson2-2.0.61.jar;C:\Users\robert\.gradle\caches\modules-2\files-2.1\org.apache.xmlgraphics\batik-util\1.19\f246bb0e8b645a552697a7a507e24536af764fc\batik-util-1.19.jar;C:\Users\robert\.gradle\caches\modules-2\files-2.1\org.apache.xmlgraphics\batik-constants\1.19\aef5a746a204f8597a3f7c0c5e28a0192c1f3e\batik-constants-1.19.jar;C:\Users\robert\.gradle\caches\modules-2\files-2.1\org.apache.xmlgraphics\batik-i18n\1.19\9df77dbefde9120a1c0c4edaa287fa7fe2263cd6\batik-i18n-1.19.jar;C:\Users\robert\.gradle\caches\modules-2\files-2.1\org.apache.xmlgraphics\batik-shared-resources\1.19\db8a1ad3a24f747f5170f623ccd785a95145b724\batik-shared-resources-1.19.jar;C:\Users\robert\.gradle\caches\modules-2\files-2.1\org.apache.xmlgraphics\xmlgraphics-commons\2.11\4adc636cc7051d40f859f53287ae268684ab6a80\xmlgraphics-commons-2.11.jar;C:\Users\robert\.gradle\caches\modules-2\files-2.1\commons-io\commons-io\2.17.0\ddcc8433eb019fb48fe25207c0278143f3e1d7e2\commons-io-2.17.0.jar;C:\Users\robert\.gradle\caches\modules-2\files-2.1\commons-logging\commons-logging\1.3.0\f5e064b541f5c5fbc5e4fb49c4e8cd4eabb3afd6\commons-logging-1.3.0.jar;C:\Program Files\Niagara\5.0.0.1\bin\ext;C:\ProgramData\Niagara\tridium\config\5.0.0.1\modules&quot; -Aniagara.module.root=C:\Projects\Envas\Workspace\n4\envas-commons\envasCommons -Aniagara.test.roots=src/moduleTest/java=java" />
+    </option>
   </component>
 </project>
