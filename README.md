@@ -1,13 +1,20 @@
 ### Envas Commons
 
-Envas commons is a [Niagara](http://www.tridium.com) module containing useful utilities 
+Envas Commons is a [Niagara](http://www.tridium.com) module containing useful utilities 
 for Niagara development. While developing our [Envas](http://www.envas.com) framework, 
-we've found that we need tools that Niagara framework can not offer us. 
-Envas commons packs some usefull open source projects and a lot of our Java code
-into a free Niagara module. Envas commons is licensed under Apache 2.0 license. 
+we've found that we need tools that a Niagara framework cannot offer us. 
+Envas commons packs some useful open source projects and a lot of our Java code
+into a free Niagara module. Envas Commons are licensed under the Apache 2.0 license. 
 
-You can download the compiled and with Neopsis certificate signed module `envasCommons-rt.jar` 
-from [project release menu](https://github.com/neopsis/envas-commons/releases).
+Envas Commons are available for Niagara4 (`envasCommons-rt.jar`) and Niagara5 (`envasCommons.jar`).
+Both modules are signed with the Neopsis certificate. You can download the compiled 
+modules from [project release menu](https://github.com/neopsis/envas-commons/releases).
+
+#### Niagara 5 notes
+
+The project contains two branches – the branch `main` for Niagara4 and the branch `N5` for Niagara5.
+The Niagara5 version of Envas Commons is based on the Niagara EA release. We cannot rule out changes
+caused by updates to the Niagara5 framework before the final version will be released.
 
 #### Message Bus
 
@@ -23,43 +30,48 @@ subscribe pattern. See the Github project pages for more details about MBassador
 
 #### Modern JSON Library
 
+> **Breaking changes in the Niagara5 version**: EnvasCommons for Niagara5 includes the `fastjson2` 
+> library. If you have used functions from the old `fastjson` library in your entire project,
+>you will likely need to make minor changes to your code. Details can be found in the [Fastjson2]
+> (https://github.com/alibaba/fastjson2) GitHub project pages. 
+
 Although Niagara contains **JSON utilities**, we are missing a lot of features implemented
 today in all modern JSON handling libraries. We found an open source project 
-[Fastjson](https://github.com/alibaba/fastjson) matching all our needs. Fastjson is 
-a Java library that can be used to convert Java Objects into their JSON representation. 
-It can also be used to convert a JSON string to an equivalent Java object. Fastjson can 
-work with arbitrary Java objects including pre-existing objects that you do not have
-source-code of.
+[Fastjson](https://github.com/alibaba/fastjson) ([Fastjson2](https://github.com/alibaba/fastjson2)
+for Niagara5) matching all our needs. Fastjson is a Java library that can be used to convert 
+Java Objects into their JSON representation. It can also be used to convert a JSON string to an 
+equivalent Java object. Fastjson can work with arbitrary Java objects, including pre-existing 
+objects that you do not have source-code of.
  
 Fast JSON 
 
  * Provides simple toJSONString() and parseObject() methods to convert Java objects to 
-   JSON and vice-versa
+   JSON and vice versa
  * Allows pre-existing unmodifiable objects to be converted to and from JSON
  * Supports Java Generics
  * Allows custom representations for objects
  * Support arbitrarily complex objects (with deep inheritance hierarchies and extensive 
    use of generic types)
- * Has much smaller size compared to similar libraries like Jackson or Gson.
+ * Has a much smaller size compared to similar libraries like Jackson or Gson.
    
 #### Licensing utilities
 
 If you are going to issue a license for your Niagara custom module, you can use Niagara
 License Server to maintain your licenses. Unfortunately, Tridium does not offer any kind of
-automation when creating a license. To enter a license you need to do everything by hand,
-with lot of data entries and copy&paste work. It's time consuming and error-prone. That's 
+automation when creating a license. To enter a license, you need to do everything by hand,
+with a lot of data entries and copy&paste work. It's time-consuming and error-prone. That's 
 why we developed our own licensing. Envas licensing uses PKI infrastructure and implements
 the code for creating, signing and validation of Envas licenses. Licenses are issued 
 as text files in the JSON format. It is up to you how you generate and deploy the licenses.
-You can, for example, integrate the Envas licensing into your back office workflow - a customer 
-buys your driver on your web site, on the payment callback you will generate a license 
+You can, for example, integrate the Envas licensing into your back office workflow – a customer 
+buys your driver on your website, on the payment callback you will generate a license 
 that will be automatically sent to the customer or placed on your licensing server.  
  
 
 Envas licensing utilities implement Baja interfaces and are compatible with the original 
 Niagara framework. If you wish to move away from Tridium licensing to Envas licensing, 
-you need to change only one row of your code obtaining the license manager. Check the test
-project code for more details how to use the utility. Example of a feature check in Niagara:   
+you need to change only one row of your code getting the license manager. Check the test
+project code for more details on how to use the utility. Example of a feature check in Niagara:   
 
 ```
 try {
@@ -80,7 +92,7 @@ try {
 }
 ```     
 
-#### Module signing
+#### Module signing in Niagara4
 
 Starting from Niagara 4.7 Tridium requires module signing when using reflection. Because both utilities, 
 Message Bus and JSON, are using reflection, you have to sign the module.
@@ -92,12 +104,11 @@ If the keystore and the XML profile do not exist, they will be created for you w
 for the first time and will be filled with the random generated values. You can use the 
 [Keystore Explorer](https://keystore-explorer.org) for the keystore entry review. 
 
-For production sites, the usage of the certificates signed by a Certification Authority is highly adviced. 
-Using the cheapest [Comodo certificates](https://codesigncert.com/comodocodesigning) is OK. Because 
-the Niagara System Trust Store stores the Comodo CA root certificate, you do not have to deploy your 
-CA-signed certificate along with your module. 
+For production sites, the usage of the certificates signed by a Certification Authority is highly advised. 
+Using the cheapest [Comodo certificates](https://codesigncert.com/comodocodesigning) is OK. Because the Niagara System Trust Store stores the 
+Comodo CA root certificate, you do not have to deploy your CA-signed certificate along with your module. 
 
-A short how to for self-signed certificates (OK for development):
+A short how-to for self-signed certificates (OK for development):
 
 1. In the Gradle file `envasCommons-rt.gradle` replace the `cert-alias` with a name identifying your
    code signing entry (e.g. private/public key pair) in the keystore. Example:
